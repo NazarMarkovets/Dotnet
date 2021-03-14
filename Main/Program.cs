@@ -1,12 +1,27 @@
 ﻿using System;
+using Lib.Interfaces;
+using Lib.Models;
+using Lib.Modules;
 
 namespace Main
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        
+        public static void Main()
         {
-            Console.WriteLine("Hello World!");
+            var person = new PersonModule<DirectorModel>();
+
+             #region CanBeUsed
+                // DirectorModel directorModel = new DirectorModel();
+                // directorModel.SetPersonalData();
+                // directorModel.GetAge();
+             #endregion
+             
+            person.InitializePerson(new DirectorModel());
+            person.GetAllData();
+
         }
     }
+
 }
