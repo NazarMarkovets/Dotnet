@@ -1,31 +1,22 @@
 
 using System;
 using Lib.Interfaces;
-using Lib.Models;
 
 namespace Lib.Modules
 {
-    public class PersonModule<T>
+    public class PersonModule
     {
         private IPerson _person;
         
-        public void InitializePerson(T ob)
+        public void InitializePerson(IPerson person)
         {
-            if (ob is DirectorModel)
-            {
-                _person = new DirectorModel();
-            }
-
-            if (ob is ManagerModel)
-            {
-                _person = new ManagerModel();                
-            }
+            _person = person;
         }
+        
+        
         public void GetAllData()
         {
-            _person.SetPersonalData();
             Console.WriteLine("I can live:{0}", _person.CalculateAgeForLife(_person._personAge));
-            _person.GetAge();
             _person.GetPersonData();
         }
 

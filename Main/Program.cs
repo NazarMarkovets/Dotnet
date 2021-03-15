@@ -1,6 +1,4 @@
-﻿using System;
-using Lib.Interfaces;
-using Lib.Models;
+﻿using Lib.Models;
 using Lib.Modules;
 
 namespace Main
@@ -10,16 +8,18 @@ namespace Main
         
         public static void Main()
         {
-            var person = new PersonModule<DirectorModel>();
-
-             #region CanBeUsed
+            var person = new PersonModule();
+            
+            #region CanBeUsed
                 // DirectorModel directorModel = new DirectorModel();
                 // directorModel.SetPersonalData();
                 // directorModel.GetAge();
-             #endregion
-             
-            person.InitializePerson(new DirectorModel());
+            #endregion
+            
+            person.InitializePerson(new ManagerModel("Daniel", 55));
             person.GetAllData();
+            
+             
 
         }
     }
