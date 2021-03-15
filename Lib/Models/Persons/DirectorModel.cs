@@ -1,6 +1,6 @@
 ﻿using Lib.Interfaces;
 using Lib.Models;
-namespace Lib.Models
+namespace Lib.Models.Persons
 {
     public class DirectorModel:IPerson
     {

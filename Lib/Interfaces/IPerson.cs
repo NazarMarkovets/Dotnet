@@ -8,6 +8,7 @@ namespace Lib.Interfaces
         public string _personName { get; set; }
         public int _personAge { get; set; }
         public StatusEnum status { get; set; }
+
         
         public void GetPersonData()
         {

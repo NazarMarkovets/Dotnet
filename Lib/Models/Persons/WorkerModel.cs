@@ -1,7 +1,7 @@
 ﻿using System;
 using Lib.Interfaces;
 
-namespace Lib.Models
+namespace Lib.Models.Persons
 {
     public class WorkerModel: IPerson
     {
