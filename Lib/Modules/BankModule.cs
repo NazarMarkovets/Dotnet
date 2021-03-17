@@ -1,4 +1,8 @@
-﻿using Lib.Models.Companies;
+﻿using System;
+using System.Reflection.Emit;
+using System.Collections.Generic;
+using Lib.Models.Companies;
+using Lib.Models.Persons;
 
 namespace Lib.Modules
 {
@@ -13,6 +17,13 @@ namespace Lib.Modules
             PrivatBank = privatBank;
         }
 
+        public void GetAllUsersFromBank(List<Customer> customers)
+        {
+            foreach(Customer customer in customers)
+            {
+                Console.WriteLine($"\ncustomer {customer.CustomerName +"\n" + customer.CustomerAge +"\n" + customer.CustomerSurname}");
+            }
+        }
         
     }
 }

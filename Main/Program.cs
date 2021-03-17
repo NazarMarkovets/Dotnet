@@ -1,5 +1,4 @@
 ﻿using Lib.Models.Companies;
-using Lib.Models.Persons;
 using Lib.Modules;
 
 namespace Main
@@ -32,9 +31,16 @@ namespace Main
             #endregion
             
             
-            BankModule bankModule = new BankModule(new Bank("Global Bank", 2000), new PrivatBank("Privat24", 5, 50));
+            var bankModule = new BankModule(
+                    new Bank("Global Bank", 2000),
+                    new PrivatBank("Privat24", 5, 50)
+                    );
             bankModule.Bank.GetBankData();
             bankModule.PrivatBank.GetBankData();
+
+            bankModule.GetAllUsersFromBank(bankModule.Bank.ReturnAllUsers());
+            bankModule.GetAllUsersFromBank(bankModule.PrivatBank.ReturnAllUsers());
+            // bankModule.PrivatBank.ReturnAllUsers();
         }
     }
 
