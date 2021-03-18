@@ -1,4 +1,6 @@
-﻿using Lib.Models.Companies;
+﻿using System;
+using Lib.Models.Companies;
+using Lib.Models.Persons;
 using Lib.Modules;
 
 namespace Main
@@ -23,24 +25,25 @@ namespace Main
                 // var person = new PersonModule();
                 // person.InitializePerson(new ManagerModel("Daniel", 55));
                 // person.GetAllData();
-                // person.InitializePerson(new DirectorModel("Ali", 66));
-                // person.GetAllData();
                 // person.InitializePerson(new WorkerModel("Gloria",22));
                 // person.GetAllData();
+            #endregion
             
+            #region UsingBankModule
+                
+                // var bankModule = new BankModule(
+                //         new Bank("Global Bank", 2000),
+                //         new PrivatBank("Privat24", 5, 50)
+                //         );
+                // bankModule.Bank.GetBankData();
+                // bankModule.PrivatBank.GetBankData();
+                // bankModule.GetAllUsersFromBank(bankModule.Bank.ReturnAllUsers());
+                // bankModule.GetAllUsersFromBank(bankModule.PrivatBank.ReturnAllUsers());
+
             #endregion
             
             
-            var bankModule = new BankModule(
-                    new Bank("Global Bank", 2000),
-                    new PrivatBank("Privat24", 5, 50)
-                    );
-            bankModule.Bank.GetBankData();
-            bankModule.PrivatBank.GetBankData();
-
-            bankModule.GetAllUsersFromBank(bankModule.Bank.ReturnAllUsers());
-            bankModule.GetAllUsersFromBank(bankModule.PrivatBank.ReturnAllUsers());
-            // bankModule.PrivatBank.ReturnAllUsers();
+            
         }
     }
 
