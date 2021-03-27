@@ -1,22 +1,23 @@
+using System.Security.AccessControl;
 using System;
 using System.Reflection.Emit;
 using System.Collections.Generic;
 using Lib.Models.Companies;
 using Lib.Models.Persons;
-
+using static System.Console;
 namespace Lib.Modules
 {
     public class DictionaryModule
     {
         static string returnedValue;
-        Dictionary<string,string> someDictionary;
-        public Dictionary<string, string> SomeDictionary { get some; set; }
+        public Dictionary<string, string> someDictionary { get; set; }
         
-        
-        public DictionaryModule(Parameters)
+        public DictionaryModule()
         {
-            SomeDictionary = new Dictionary<string, string>();
+            someDictionary = new Dictionary<string, string>();
         }
+        
+
         public void AddDataToDictionary(Dictionary<string, string> someDictionary)
         {
             WriteLine("\n\tMethod: AddDataToDictionary");
@@ -38,9 +39,9 @@ namespace Lib.Modules
                 WriteLine(item.Key +" "+ item.Value);
             }
         }
-        public void SearchValue(Dictionary<string, string> someDictionary, string searchedKey)
+        public void TryGetDictionaryValue(Dictionary<string, string> someDictionary, string searchedKey)
         {
-            WriteLine($"\n\tMethod SearchKey:");
+            WriteLine($"\n\tMethod TryGetDictionaryValue:");
                 if (someDictionary.TryGetValue(searchedKey, out returnedValue))
                     WriteLine($"For key = \"{searchedKey}\", value = {returnedValue}.");
                 else
@@ -61,6 +62,7 @@ namespace Lib.Modules
         }
         public string[] ReturnKeys(Dictionary<string, string> dictionary)
         {
+            WriteLine($"\n\tMethod ReturnKeys returned keys:");
             string[] keys = new string[dictionary.Count];
             dictionary.Keys.CopyTo( keys,0);
             return keys;
@@ -69,7 +71,7 @@ namespace Lib.Modules
         {
             var arrayKeys = ReturnKeys(someDictionary);
                 int counter = 0;
-                    WriteLine($"\n\tIn GetAllDictionaryKeys - Method ReturnReys:\nFound Keys:");
+                    WriteLine($"\n\tMethod GetAllDictionaryKeys - Method ReturnReys:\nFound Keys:");
                     foreach(var i  in arrayKeys)
                     {
                         counter++;
@@ -79,6 +81,7 @@ namespace Lib.Modules
 
         public void TrimDictionary(Dictionary<string,string> someDictionary, int futureCapasityOfDict)
         {
+            WriteLine($"\n\tMethod TrimDictionary:");
             /// Sets the future capasity for dictionary for saving storage resources
             ///if we know that new elements won't be added in the future
             if(futureCapasityOfDict < someDictionary.Count)
