@@ -4,6 +4,7 @@ using Lib.AbstractClassUsage;
 using Lib.Models.Companies;
 using Lib.Models.Persons;
 using Lib.Modules;
+using Lib.Patterns.Builder;
 
 namespace Main
 {
@@ -12,10 +13,11 @@ namespace Main
 
         public static void Main()
         {
-            UsingPersonInterface();
-            UsingBankModule();
-            UsingDictionary();
-            UsingAbstractClass();
+            // UsingPersonInterface();
+            // UsingBankModule();
+            // UsingDictionary();
+            // UsingAbstractClass();
+            UsingBuilderPattern();
         }
 
 
@@ -90,6 +92,27 @@ namespace Main
             Employer employer = new Employer("C2", 900m);
             employer.ShowAge();
             employer.ShowCatagory();
+            
+            employer.ShowPersonSalary();
+            employer.ShowCatagory();
+        }
+
+        private static void UsingBuilderPattern()
+        {
+            Director director = new Director("Part 1 ", "Part 2 ");
+            
+            ConcreteBuilderA concreteBuilderA = new ConcreteBuilderA();
+            director.Construct(concreteBuilderA);
+            Product product1 = concreteBuilderA.ReturnAllProducts();
+            product1.ShowAllProducts();
+            
+            ConcreteBuilderB concreteBuilderB = new ConcreteBuilderB();
+            director.ChangeParts("Part3 ", "Part 4");
+            director.Construct(concreteBuilderB);
+
+            Product product2 = concreteBuilderB.ReturnAllProducts();
+            product2.ShowAllProducts();
+
         }
     }
 
