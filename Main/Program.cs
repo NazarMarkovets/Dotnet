@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Dotnet.Lib;
 using Lib.AbstractClassUsage;
 using Lib.Models.Companies;
 using Lib.Models.Persons;
@@ -17,7 +19,8 @@ namespace Main
             // UsingBankModule();
             // UsingDictionary();
             // UsingAbstractClass();
-            UsingBuilderPattern();
+            //UsingBuilderPattern();
+            UsingDelegates();
         }
 
 
@@ -40,15 +43,13 @@ namespace Main
         {
             var bankModule = new BankModule(
                     new Bank("Global Bank", 2000),
-                    new PrivatBank("Privat24", 5, 50)
-                    );
+                    new PrivatBank("Privat24", 5, 50));
             bankModule.Bank.GetBankData();
             bankModule.PrivatBank.GetBankData();
             bankModule.GetAllUsersFromBank(bankModule.Bank.ReturnAllUsers());
             bankModule.GetAllUsersFromBank(bankModule.PrivatBank.ReturnAllUsers());
 
         }
-
         private static void UsingDictionary()
         {
             var dictionaryModule = new DictionaryModule();
@@ -112,8 +113,66 @@ namespace Main
 
             Product product2 = concreteBuilderB.ReturnAllProducts();
             product2.ShowAllProducts();
-
         }
+        
+        /// <summary>
+        /// Shows working of delegates
+        /// Show 10 random calls of 4 types of methods
+        /// </summary>
+        private static void UsingDelegates()
+        {
+            var counter = 0;
+            var random = new Random();
+            var trace = new List<string>();
+            while (counter < 10)
+            {
+                var value = random.Next(1, 10);
+                object Result = null;
+                switch (value % 2)
+                {
+                    case 0 when value < 5:
+                    {
+                        DelegatesExample.CreateUserWithPredefinedData userWithPredefinedData = DelegatesExample.CreateWorkerModel_Stat;
+                        trace.Add($"Item#{counter}\nDelegateName: {userWithPredefinedData}\nMethodName: {userWithPredefinedData.Method.Name}\nTarget: {userWithPredefinedData.Target}");
+                        Result = userWithPredefinedData.Invoke();
+                        break;
+                    }
+                    case 0 when value > 5:
+                    {
+                        DelegatesExample.CreateUserWithPredefinedData userWithPredefinedData = DelegatesExample.CreateManagerModel_Stat;
+                        trace.Add($"\nItem#{counter}\nDelegateName: {userWithPredefinedData}\nMethodName: {userWithPredefinedData.Method.Name}\nTarget: {userWithPredefinedData.Target}");
+                        Result = userWithPredefinedData();
+                        break;
+                    }
+                    case 1 when value < 5:
+                    {
+                        DelegatesExample.CreateUserWithSpecialData userWithSpecialData = DelegatesExample.CreateManagerModelWithParams_Stat;
+                        trace.Add($"Item#{counter}\nDelegateName: {userWithSpecialData}\nMethodName: {userWithSpecialData.Method.Name}\nTarget: {userWithSpecialData.Target}");
+                        Result = userWithSpecialData("Given Manager Name", 1);
+                        break;
+                    }
+                    default:
+                    {
+                        DelegatesExample.CreateUserWithSpecialData userWithSpecialData = DelegatesExample.CreateWorkerModelWithParams_Stat;
+                        trace.Add($"Item#{counter}\nDelegateName: {userWithSpecialData}\nMethodName: {userWithSpecialData.Method.Name}\nTarget: {userWithSpecialData.Target}");
+                        Result = userWithSpecialData("Given Worker Name", 13);
+                        break;
+                    }
+                }
+                switch (Result)
+                {
+                    case ManagerModel managerModel:
+                        Console.WriteLine("Manager Name: " + managerModel._personName + "Manager Age: " + managerModel._personAge);
+                        break;
+                    case WorkerModel workerModel:
+                        Console.WriteLine("Manager Name: " + workerModel._personName + "Manager Age: " + workerModel._personAge);
+                        break;
+                } 
+                counter++;
+            }
+            trace.ForEach(Console.WriteLine);
+        }
+        
     }
 
 }
