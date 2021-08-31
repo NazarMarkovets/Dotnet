@@ -7,6 +7,7 @@ using Lib.Models.Companies;
 using Lib.Models.Persons;
 using Lib.Modules;
 using Lib.Patterns.Builder;
+using TraceManager;
 
 namespace Main
 {
@@ -118,12 +119,14 @@ namespace Main
         /// <summary>
         /// Shows working of delegates
         /// Show 10 random calls of 4 types of methods
+        /// Use Tracing in TraceManager
         /// </summary>
         private static void UsingDelegates()
         {
             var counter = 0;
             var random = new Random();
             var trace = new List<string>();
+            Tracing tracing = new Tracing();
             while (counter < 10)
             {
                 var value = random.Next(1, 10);
@@ -135,6 +138,7 @@ namespace Main
                         DelegatesExample.CreateUserWithPredefinedData userWithPredefinedData = DelegatesExample.CreateWorkerModel_Stat;
                         trace.Add($"Item#{counter}\nDelegateName: {userWithPredefinedData}\nMethodName: {userWithPredefinedData.Method.Name}\nTarget: {userWithPredefinedData.Target}");
                         Result = userWithPredefinedData.Invoke();
+                        
                         break;
                     }
                     case 0 when value > 5:
@@ -170,9 +174,17 @@ namespace Main
                 } 
                 counter++;
             }
-            trace.ForEach(Console.WriteLine);
+
+            tracing.Notify += Display;
+            tracing.ShowInfo(tracing);
+            // trace.ForEach(Console.WriteLine);
         }
-        
+
+        private static void Display(object sender, TraceEventArgs e)
+        {
+            
+            Console.WriteLine("Display " + e.Message);
+        }
     }
 
 }
