@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Dotnet.Lib;
 using Lib.AbstractClassUsage;
 using Lib.Models.Companies;
@@ -125,8 +126,7 @@ namespace Main
         {
             var counter = 0;
             var random = new Random();
-            var trace = new List<string>();
-            Tracing tracing = new Tracing();
+            var tracing = new Tracing();
             while (counter < 10)
             {
                 var value = random.Next(1, 10);
@@ -136,29 +136,30 @@ namespace Main
                     case 0 when value < 5:
                     {
                         DelegatesExample.CreateUserWithPredefinedData userWithPredefinedData = DelegatesExample.CreateWorkerModel_Stat;
-                        trace.Add($"Item#{counter}\nDelegateName: {userWithPredefinedData}\nMethodName: {userWithPredefinedData.Method.Name}\nTarget: {userWithPredefinedData.Target}");
+                        tracing.AddToTracing(counter, userWithPredefinedData);
                         Result = userWithPredefinedData.Invoke();
-                        
+                        tracing.ShowInfo(userWithPredefinedData);
+                        tracing.GetObjectType(userWithPredefinedData);
                         break;
                     }
                     case 0 when value > 5:
                     {
                         DelegatesExample.CreateUserWithPredefinedData userWithPredefinedData = DelegatesExample.CreateManagerModel_Stat;
-                        trace.Add($"\nItem#{counter}\nDelegateName: {userWithPredefinedData}\nMethodName: {userWithPredefinedData.Method.Name}\nTarget: {userWithPredefinedData.Target}");
+                        tracing.AddToTracing(counter, userWithPredefinedData);
                         Result = userWithPredefinedData();
                         break;
                     }
                     case 1 when value < 5:
                     {
                         DelegatesExample.CreateUserWithSpecialData userWithSpecialData = DelegatesExample.CreateManagerModelWithParams_Stat;
-                        trace.Add($"Item#{counter}\nDelegateName: {userWithSpecialData}\nMethodName: {userWithSpecialData.Method.Name}\nTarget: {userWithSpecialData.Target}");
+                        tracing.AddToTracing(counter, userWithSpecialData);
                         Result = userWithSpecialData("Given Manager Name", 1);
                         break;
                     }
                     default:
                     {
                         DelegatesExample.CreateUserWithSpecialData userWithSpecialData = DelegatesExample.CreateWorkerModelWithParams_Stat;
-                        trace.Add($"Item#{counter}\nDelegateName: {userWithSpecialData}\nMethodName: {userWithSpecialData.Method.Name}\nTarget: {userWithSpecialData.Target}");
+                        tracing.AddToTracing(counter, userWithSpecialData);
                         Result = userWithSpecialData("Given Worker Name", 13);
                         break;
                     }
@@ -173,18 +174,17 @@ namespace Main
                         break;
                 } 
                 counter++;
+                Console.WriteLine("===================================");
             }
-
-            tracing.Notify += Display;
-            tracing.ShowInfo(tracing);
+            
+            tracing.Notify += Tracing.Display;
+            
+            // tracing.TraceON += Tracing.OnTraceOn;
+            tracing.TraceON -= Tracing.OnTraceOn;
             // trace.ForEach(Console.WriteLine);
         }
 
-        private static void Display(object sender, TraceEventArgs e)
-        {
-            
-            Console.WriteLine("Display " + e.Message);
-        }
+        
     }
 
 }

@@ -4,17 +4,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Threading.Channels;
 
 namespace TraceManager
 {
     public class Tracing
     {
+        private readonly List<string> EventsList;
+
+        public Tracing()
+        {
+            TraceON += Display;
+            EventsList = new List<string>();
+        }
         public void ShowInfo(object type)
         {
             Notify?.Invoke(this,new TraceEventArgs("ShowInfo"));
             Console.WriteLine(GetObjectType(type)?? "Can't check type");
+            EventsList.ForEach(Console.WriteLine);
         }
-        private string GetObjectType(object type)
+
+        public string GetObjectType(object type)
         {
             Notify?.Invoke(this,new TraceEventArgs("Try get type"));
             return type switch
@@ -25,54 +35,28 @@ namespace TraceManager
                 _ => null
             };
         }
-
+        public void AddToTracing(object counter, Delegate @delegate)
+        {
+            EventsList.Add($"Item#{counter}\nDelegateName: {@delegate}\nMethodName: {@delegate.Method.Name}\nTarget: {@delegate.Target}");
+        }
+        
         public delegate void TraceHandler(object sender, TraceEventArgs e);
         public event TraceHandler Notify;
-
-        // public static IEnumerable<Type> NextGalaxy
-        // {
-        //     get
-        //     {
-        //         yield return typeof(T);
-        //         yield return new Galaxy { Name = "Pinwheel", MegaLightYears = 25 };
-        //         yield return new Galaxy { Name = "Milky Way", MegaLightYears = 0 };
-        //         yield return new Galaxy { Name = "Andromeda", MegaLightYears = 3 };
-        //     }
-        // }
-        
-        // public delegate void TracingManager(object sender, TraceEventArgs e);
-        // public event TracingManager TraceOn
-        // {
-        //     add { 
-        //         TraceOn += value;
-        //         Console.WriteLine($"{value.Method.Name} created");
-        //     }
-        //     remove
-        //     {
-        //         TraceOn -= value; 
-        //         Console.WriteLine($"{value.Method.Name} deleted");
-        //     }
-        // }
-
-        public event TraceHandler TraceOFF
+        public event TraceHandler TraceON
         {
-            add { 
-                TraceOFF += value;
-                    Console.WriteLine($"{value.Method.Name} created");
-                }
-                remove
-                {
-                    TraceOFF -= value; 
-                    Console.WriteLine($"{value.Method.Name} deleted");
-                }
+            add => Console.WriteLine($"\t####{value.Method.Name} Event created####\n");
+            remove => Console.WriteLine($"\t####{value.Method.Name} Event deleted####\n");
         }
-
+        public static void Display(object sender, TraceEventArgs e) =>
+            Console.WriteLine($"## Display Method: Sender {sender.ToString()}: Event message: " + e.Message);
         private enum STATE
         {
             INIT = 1,
             PROCESS = 2,
             CANSEL = 3
         }
+
+        public static void OnTraceOn(object sender, TraceEventArgs e) => Console.WriteLine(e.Message);
     }
     
 }
