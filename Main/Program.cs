@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -22,7 +23,15 @@ namespace Main
             // UsingDictionary();
             // UsingAbstractClass();
             //UsingBuilderPattern();
-            UsingDelegates();
+            //UsingDelegates();
+            
+            // LinqManager.LinqSelect();
+            // LinqManager.LinqSelectByParameter();
+            // LinqManager.LinqTakeWhile();
+            // LinqManager.LinqSelectSortedByAgeDesc();
+            // LinqManager.LinqSelectLastOrDefault();
+            // CreatingHashMap();
+
         }
 
 
@@ -178,10 +187,27 @@ namespace Main
             }
             
             tracing.Notify += Tracing.Display;
-            
             // tracing.TraceON += Tracing.OnTraceOn;
             tracing.TraceON -= Tracing.OnTraceOn;
             // trace.ForEach(Console.WriteLine);
+        }
+
+        private static void CreatingHashMap()
+        {
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+            
+            
+            var hashtable = new Hashtable { { "string", 100 } };
+            var res = hashtable.Keys.Cast<List<string>>();
+            Console.WriteLine(res.Select(c=>c));
+            Console.WriteLine(hashtable["string"]);
+
+            HashSet<string> set = new();
+            set.Add("st1");
+            string actualValue = string.Empty;
+            
+            set.TryGetValue("st1", out actualValue);
+            Console.WriteLine(actualValue);
         }
 
         
