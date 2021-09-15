@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Lib\Lib.csproj" />
+    <ProjectReference Include="..\ParallelProgramming\ParallelProgramming.vbproj" />
     <ProjectReference Include="..\TraceManager\TraceManager.csproj" />
   </ItemGroup>
 
