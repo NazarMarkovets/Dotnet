@@ -4,18 +4,13 @@ Imports System.Runtime.InteropServices
 
 Public Class Filtering
 
-    Public Shared Sub Write()
-        For offsetY = 1 To 5 Step 1
-            Console.WriteLine(offsetY)
-        Next
-    End Sub
-
-
     Public Shared Function MedianFilter(sourceBitmap As Bitmap, matrixSize As Integer, Optional grayScale As Boolean = False, Optional bias As Integer = 0) As Bitmap
 
+#Disable Warning CA1416 ' Validate platform compatibility
         Dim sourceData As BitmapData = sourceBitmap.LockBits(New Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height),
                                                                 ImageLockMode.ReadOnly,
                                                                 PixelFormat.Format32bppArgb)
+
         Dim arraySize As Integer = sourceData.Stride * sourceData.Height
         Dim pixelBuffer(arraySize), resultBuffer(arraySize) As Byte
 
@@ -75,7 +70,7 @@ Public Class Filtering
         Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length)
 
         resultBitMap.UnlockBits(resultData)
-
+#Enable Warning CA1416 ' Validate platform compatibility
         Return resultBitMap
     End Function
 End Class

@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Dotnet.Lib;
 using Lib.AbstractClassUsage;
+using Lib.Async;
 using Lib.Models.Companies;
 using Lib.Models.Persons;
 using Lib.Modules;
@@ -37,8 +38,9 @@ namespace Main
             // LinqManager.LinqSelectSortedByAgeDesc();
             // LinqManager.LinqSelectLastOrDefault();
             // CreatingHashMap();
-            FilteringUsageVB();
-           
+            // FilteringUsageVB();
+           AsyncProgramming.ThreadLoopWithInfo();
+
         }
 
 
@@ -223,6 +225,7 @@ namespace Main
             Console.WriteLine(actualValue);
         }
 
+#pragma warning disable CA1416
         private static void FilteringUsageVB()
         {
             Console.WriteLine("Select Filter Straight(default 3): \n [1] - Default; [2] - 5");
@@ -268,13 +271,6 @@ namespace Main
             }
         }
 
-        private static void Write()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Console.WriteLine(i);
-            }
-        }
         private static Bitmap MedianFilter(this Bitmap sourceBitmap, int matrixSize, int bias = 0, bool grayscale = false)
         {
             var sourceData = sourceBitmap.LockBits(new Rectangle(0, 0,sourceBitmap.Width, sourceBitmap.Height),
@@ -345,4 +341,5 @@ namespace Main
             return resultBitmap;
         }
     }
+#pragma warning restore CA1416
 }
