@@ -12,18 +12,7 @@ namespace Lib.Async
 
         public static void ThreadLoopWithInfo()
         {
-            // while(counter < array.Length) {
-            //     lock(locker) {
-            //         int localCounter = counter;
-            //         new Thread(
-            //             () => {
-            //                 WriteArray(localCounter);
-            //             }
-            //         ).Start();
-            //         counter += 1;
-            //     }
-            // }
-
+            
             while(counter < array.Length) {
                 
                     int localCounter = counter;

@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using Dotnet.Lib;
 using Lib.AbstractClassUsage;
 using Lib.Async;
+using Lib.DelegatesAndLambda;
 using Lib.Models.Companies;
 using Lib.Models.Persons;
 using Lib.Modules;
@@ -39,7 +40,8 @@ namespace Main
             // LinqManager.LinqSelectLastOrDefault();
             // CreatingHashMap();
             // FilteringUsageVB();
-           AsyncProgramming.ThreadLoopWithInfo();
+           
+            //AsyncProgramming.ThreadLoopWithInfo();
 
         }
 
@@ -153,7 +155,7 @@ namespace Main
                 {
                     case 0 when value < 5:
                     {
-                        DelegatesExample.CreateUserWithPredefinedData userWithPredefinedData =
+                            DelegatesExample.CreateUserWithPredefinedData userWithPredefinedData =
                             DelegatesExample.CreateWorkerModel_Stat;
                         tracing.AddToTracing(counter, userWithPredefinedData);
                         Result = userWithPredefinedData.Invoke();

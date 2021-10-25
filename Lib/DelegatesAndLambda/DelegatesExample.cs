@@ -1,6 +1,6 @@
 ﻿using Lib.Models.Persons;
 
-namespace Dotnet.Lib
+namespace Lib.DelegatesAndLambda
 {
     /// <summary>
     /// Shows delegates usage
