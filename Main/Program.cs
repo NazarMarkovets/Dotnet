@@ -42,9 +42,10 @@ namespace Main
             // FilteringUsageVB();
            
             //AsyncProgramming.ThreadLoopWithInfo();
-
+            ThreadSync threadSync = new ThreadSync();
+            threadSync.ShowThreadWorking();
         }
-
+        
 
         /// <summary>
         /// <remarks>
