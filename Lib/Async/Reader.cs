@@ -16,23 +16,21 @@ using System.Threading;
 Промоделюйте ситуацію.
 */
 using System;
+using Lib.Async.Factory;
 
 namespace Lib.Async
 {
     class Reader
     {
-        private MessageBuilder messageBuilder;
-        private static readonly Object locker = new Object();
-
+        private readonly MessageBuilder messageBuilder;
         public Reader(MessageBuilder messageBuilder)
         {
             this.messageBuilder = messageBuilder;
         }
-
         public void ReadMessage(string name)
         {
             System.Console.WriteLine($"[READER: ReadMessage] Thread ID: {name}");
-            messageBuilder.ReadMessage(name);
+            messageBuilder.GetData(name);
         }
     }
 

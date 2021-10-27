@@ -42,8 +42,10 @@ namespace Main
             // FilteringUsageVB();
            
             //AsyncProgramming.ThreadLoopWithInfo();
-            ThreadSync threadSync = new ThreadSync();
-            threadSync.ShowThreadWorking();
+
+            //new ThreadSync().SyncCreatingReadingMessages();
+            //new ThreadSync().SyncTraficLightsWork(); 
+            new ThreadSync().SyncParkingLot();
         }
         
 

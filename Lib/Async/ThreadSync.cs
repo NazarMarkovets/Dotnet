@@ -4,62 +4,96 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Collections;
-/*
-Один процес виробляє повідомлення, призначені для сприйняття та обробку
-іншим процесом. Процес, що виробляє повідомлення, називають виробником, а
-процес, що сприймає повідомлення – споживачем. Процеси взаємодіють через
-деяку узагальнену область пам'яті, яка за змістом є критичним ресурсом. Необхідно
-створити декілька виробників (5) та декілька споживачів (5), які намагаються
-отримати доступ до змінної. До змінної може одночасно звертатися лише один
-процес. Змінна повинна накопичувати повідомлення від виробників. Кожне
-повідомлення несе у собі інформацію, який процес його створив. Коли споживач
-отримує доступ до змінної, він зменшує кількість повідомлень, але тільки
-встановленого виробника, ігноруючи повідомлення інших виробників. Якщо
-змінна не містить жодного повідомлення необхідного виробника, споживач
-звільнює ресурс та відпочиває. Після виробництва повідомлення процес-виробник
-відпочиває. Після вдалого споживання процес-споживач теж відпочиває.
-Промоделюйте ситуацію.
-*/
+
 namespace Lib.Async
 {
     public class ThreadSync
     {
-        private MessageBuilder messageBuilder = new MessageBuilder();
-        private Reader GetReader => new Reader(messageBuilder);
-        private Creator GetCreator => new Creator(messageBuilder);
-        private int counter;
-        public void ShowThreadWorking()
+        private readonly MessageBuilder messageBuilder = new MessageBuilder();
+        private Reader GetReader => new(messageBuilder);
+        private Creator GetCreator => new(messageBuilder);
+        /// <summary>
+        ///  Task 2
+        /// </summary>
+        public void SyncCreatingReadingMessages()
         {
             List<Thread> listOfThreads = new List<Thread>();
             listOfThreads.AddRange(new Thread[]{
-   
                 new Thread(()=>GetCreator.CreateMessage("Asus")),
                 new Thread(()=>GetCreator.CreateMessage("HP")),
                 new Thread(()=>GetCreator.CreateMessage("Dell")),
                 new Thread(()=>GetCreator.CreateMessage("PS")),
                 new Thread(()=>GetCreator.CreateMessage("MB")),
-
+                
                 new Thread(()=>GetReader.ReadMessage("Asus")),
                 new Thread(()=>GetReader.ReadMessage("HP")),
                 new Thread(()=>GetReader.ReadMessage("Dell")),
                 new Thread(()=>GetReader.ReadMessage("PS")),
                 new Thread(()=>GetReader.ReadMessage("MB"))
-                
             });
-
+            
             foreach (var item in listOfThreads)
             {
-                System.Console.WriteLine("[Foreach ID:]" + item.ManagedThreadId);
                 item.Start();
             }
-
+            
             foreach (var item in listOfThreads)
             {
-                System.Console.WriteLine("[Foreach WAIT ID:]" + item.ManagedThreadId);
                 item.Join();
             }
+
             messageBuilder.GetHashtable();
+        }
+        
+        public void SyncTraficLightsWork()
+        {
+            TrafficLight trafficLight = new TrafficLight();
             
+            var east = new Road();
+            var west = new Road();
+            var north = new Road();
+            var south = new Road();
+
+            Thread trafficLightThread = new Thread(trafficLight.Run);
+            trafficLightThread.Start();
+            
+            new Thread(() => east.Run(TrafficLight.EAST, nameof(east))).Start();
+            new Thread(() => west.Run(TrafficLight.WEST, nameof(west))).Start();
+            new Thread(() => south.Run(TrafficLight.SOUTH, nameof(south))).Start();
+            new Thread(() => north.Run(TrafficLight.NORTH, nameof(north))).Start();
+            
+            Thread.Sleep(40000);
+            trafficLightThread.Interrupt();
+        }
+
+        public void SyncParkingLot()
+        {
+            var parkingLot = new ParkingLot();
+            
+            int id = 0;
+
+            while (true)
+            {
+                id += 1;
+                var driver = new Driver(id, parkingLot);
+                
+                Thread.Sleep(1 * 1000);
+
+                new Thread(() =>
+                {
+                    bool succeeded = driver.park();
+
+                    while (succeeded)
+                    {
+                        driver.sleep();
+                        driver.wander();
+                        succeeded = driver.park();
+                    }
+
+                    driver.goAway();
+                }).Start();
+            }
+
         }
     }
 }
