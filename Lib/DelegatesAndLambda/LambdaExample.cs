@@ -15,7 +15,7 @@ namespace Lib.DelegatesAndLambda
     /// public int DoSomething(float number)               // Func<float,int>
     /// public int DoSomething(float number, string text)  // Func<float,string,int>
     /// </summary>
-    class LambdaExample
+    public class LambdaExample
     {
         private int valueFromFuncPlus6 = 0;
         public LambdaExample()

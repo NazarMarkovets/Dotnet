@@ -1,29 +1,33 @@
-﻿using System;
+﻿using Lib.Models.Persons;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Lib.Models.Persons;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Lib.LINQ.Data__Test_
+namespace GlobalTesting
 {
-    [TestClass]
-    public class UserModuleTest
+    [TestFixture]
+    class UserModuleTest
     {
         private User _user;
 
-        [TestInitialize]
+        [SetUp]
         public void StartUp()
         {
             _user = new User();
         }
 
-        [TestMethod("User can generate random user")]
+        [Test, Description("User can generate random user")]
         public void Test_User_CreateNewRandomUser()
         {
             var newUser = _user.CreateNewRandomUser();
             Assert.IsNotNull(newUser);
         }
 
-        [TestMethod]
+        [Test]
         public void Test_User_CreateNewRandomUser_NotReturnsNull()
         {
             var newUser = _user.CreateNewRandomUser();
@@ -31,7 +35,7 @@ namespace Lib.LINQ.Data__Test_
             Assert.IsTrue(newUser.Age > 0 && newUser.Salary > 0 && !newUser.Name.Equals("Name"));
         }
 
-        [TestMethod]
+        [Test]
         public void Test_User_CreateNewRandom_Equals()
         {
             var expected = _user.CreateNewRandomUser();
@@ -39,15 +43,13 @@ namespace Lib.LINQ.Data__Test_
             Assert.IsTrue(!expected.Equals(actual));
         }
 
-        [TestMethod]
+        [Test]
         public void Test_User_Equals_Works()
         {
             var Id = Guid.NewGuid();
-            var expected = new User() {Name = "Name", Age = 18, Salary = 20.00, Surname = "Sname", Id = Id};
-            var actual = new User() {Name = "Name", Age = 18, Salary = 20.00, Surname = "Sname", Id = Id};
+            var expected = new User() { Name = "Name", Age = 18, Salary = 20.00, Surname = "Sname", Id = Id };
+            var actual = new User() { Name = "Name", Age = 18, Salary = 20.00, Surname = "Sname", Id = Id };
             Assert.IsTrue(expected.Equals(actual));
         }
-
-        
     }
 }
