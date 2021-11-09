@@ -21,10 +21,8 @@ namespace GlobalTesting.API
         private string FullPath => $"{pathMain}\\{fileName}";
         private string stableGUID;
 
-        private string StableGUID
-        {
-            get => stableGUID ??= Guid.NewGuid().ToString();
-        }
+        private string StableGUID => stableGUID ??= Guid.NewGuid().ToString();
+
         [OneTimeSetUp]
         protected void Prepare()
         {

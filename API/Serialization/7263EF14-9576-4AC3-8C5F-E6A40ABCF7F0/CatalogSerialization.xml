@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<TestDTo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!--Generated as responce-->
+  <TestValue>
+    <string>Item1</string>
+    <string>Item2</string>
+  </TestValue>
+</TestDTo>
